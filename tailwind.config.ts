@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -105,13 +104,60 @@ export default {
 						transform: 'scale(1)',
 						opacity: '1'
 					}
+				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-20px)'
+					}
+				},
+				'float-delayed': {
+					'0%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-15px)'
+					}
+				},
+				'float-reverse': {
+					'0%, 100%': {
+						transform: 'translateY(-10px)'
+					},
+					'50%': {
+						transform: 'translateY(10px)'
+					}
+				},
+				'gradient': {
+					'0%, 100%': {
+						backgroundSize: '200% 200%',
+						backgroundPosition: 'left center'
+					},
+					'50%': {
+						backgroundSize: '200% 200%',
+						backgroundPosition: 'right center'
+					}
+				},
+				'spin-slow': {
+					from: {
+						transform: 'rotate(0deg)'
+					},
+					to: {
+						transform: 'rotate(360deg)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.6s ease-out forwards',
-				'scale-in': 'scale-in 0.4s ease-out forwards'
+				'scale-in': 'scale-in 0.4s ease-out forwards',
+				'float': 'float 6s ease-in-out infinite',
+				'float-delayed': 'float-delayed 8s ease-in-out infinite 2s',
+				'float-reverse': 'float-reverse 10s ease-in-out infinite 4s',
+				'gradient': 'gradient 8s ease infinite',
+				'spin-slow': 'spin-slow 3s linear infinite'
 			}
 		}
 	},

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useNavigate } from 'react-router-dom';
 
 interface App {
   id: number;
@@ -22,7 +23,16 @@ interface AppCardProps {
 
 const AppCard: React.FC<AppCardProps> = ({ app, index }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
   
+  const handleViewDemo = () => {
+    navigate(`/app/${app.id}`);
+  };
+
+  const handleExternalLink = () => {
+    navigate(`/app/${app.id}/demo`);
+  };
+
   return (
     <div 
       className={`group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:bg-white/10 transition-all duration-500 hover:scale-105 hover:shadow-2xl animate-fade-in`}
@@ -84,14 +94,16 @@ const AppCard: React.FC<AppCardProps> = ({ app, index }) => {
         <div className="flex gap-3">
           <Button 
             size="sm" 
+            onClick={handleViewDemo}
             className={`bg-gradient-to-r ${app.gradient} hover:opacity-90 text-white border-0 flex-1 transition-all duration-300 hover:shadow-lg`}
           >
-            View Demo
+            View Details
             <ArrowRight className={`w-4 h-4 ml-2 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
           </Button>
           <Button 
             size="sm" 
             variant="outline" 
+            onClick={handleExternalLink}
             className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
           >
             <ExternalLink className="w-4 h-4" />
