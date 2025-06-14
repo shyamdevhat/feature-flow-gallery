@@ -15,6 +15,7 @@ import Benefits from '@/components/appdetails/Benefits';
 import GettingStarted from '@/components/appdetails/GettingStarted';
 import Testimonials from '@/components/appdetails/Testimonials';
 import CtaSection from '@/components/appdetails/CtaSection';
+import AppRoadmap from '@/components/appdetails/AppRoadmap';
 
 // Utility to get the icon component from the string name
 const iconMap: Record<string, React.ElementType> = {
@@ -92,6 +93,10 @@ const AppDetails = () => {
         <HeroSection app={app} />
         <MainImage src={app.image_url!} alt={app.title} />
         <DetailsGrid gradient={app.gradient} />
+
+        {/* Roadmap Section */}
+        <AppRoadmap applicationId={app.id} gradient={app.gradient} />
+
         <Benefits features={app.features} gradient={app.gradient} />
         <GettingStarted gradient={app.gradient} />
         <Testimonials appTitle={app.title} />

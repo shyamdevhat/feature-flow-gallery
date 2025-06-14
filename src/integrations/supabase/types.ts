@@ -36,6 +36,47 @@ export type Database = {
         }
         Relationships: []
       }
+      app_roadmap_items: {
+        Row: {
+          application_id: string
+          created_at: string | null
+          description: string | null
+          id: string
+          sort_order: number
+          status: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          application_id: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          sort_order?: number
+          status?: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          application_id?: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          sort_order?: number
+          status?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "app_roadmap_items_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       applications: {
         Row: {
           created_at: string | null
