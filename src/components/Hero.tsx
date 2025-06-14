@@ -12,11 +12,11 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-[80vh] flex flex-col items-center justify-center relative px-4 md:px-0 apple-hero-gradient">
-      {/* Frosted glass card for the Hero content */}
-      <div className="apple-card max-w-3xl w-full sm:mx-auto py-16 px-6 md:px-10 flex flex-col items-center text-center mt-24 md:mt-32 shadow-xl">
+    <section className="apple-hero-background relative">
+      {/* Frosted glass Apple-style card for the Hero content */}
+      <div className="apple-card max-w-3xl w-full sm:mx-auto py-16 px-6 md:px-10 flex flex-col items-center text-center mt-24 md:mt-36 shadow-2xl border-0">
         <div className="flex justify-center mb-5">
-          <div className="flex items-center gap-2 px-4 py-1 rounded-full bg-primary/5 text-primary text-sm tracking-wide font-semibold border border-primary/10">
+          <div className="flex items-center gap-2 px-4 py-1 rounded-full bg-primary/5 text-primary text-sm font-semibold border border-primary/10">
             <Sparkles className="w-4 h-4" />
             Welcome to the Future of GenAI
           </div>
@@ -26,7 +26,7 @@ const Hero = () => {
           GenAI Application Showcase
         </h1>
         <p className="text-lg md:text-xl text-muted-foreground font-medium mb-8 tracking-tight">
-          Discover AI-powered solutions crafted with the finest <span className="font-bold text-primary">modern design principles</span>. Explore, learn, and be inspired by next-level GenAI experiences.
+          Discover AI-powered solutions crafted with the finest <span className="font-bold text-primary">Apple-inspired design</span>. Explore, learn, and be inspired by next-level GenAI experiences.
         </p>
         <div className="flex flex-col md:flex-row gap-4 mt-2 justify-center">
           <Button 
@@ -49,7 +49,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Scroll indicator (minimal, Apple style) */}
+      {/* Scroll indicator */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center">
         <ChevronDown className="w-6 h-6 text-muted-foreground animate-bounce" />
       </div>

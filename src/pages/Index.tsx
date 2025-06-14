@@ -8,7 +8,7 @@ import Footer from '../components/Footer';
 
 const Index = () => {
   return (
-    <div className="min-h-screen apple-hero-gradient">
+    <div className="min-h-screen bg-background">
       <Hero />
       <div className="apple-section">
         <AppShowcase />
@@ -16,7 +16,7 @@ const Index = () => {
       <div className="apple-section">
         <FeaturesSection />
       </div>
-      <div className="apple-section bg-white/80 dark:bg-black/20">
+      <div className="apple-section bg-white/90 dark:bg-[#232529]/50">
         <TestimonialsSection />
       </div>
       <Footer />
