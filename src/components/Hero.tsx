@@ -4,62 +4,82 @@ import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
-const AnimatedBlobs = () => (
+// New: Mosaic animated SVG background component
+const MosaicBackground = () => (
   <svg
-    aria-hidden="true"
     className="absolute inset-0 w-full h-full pointer-events-none z-0"
     viewBox="0 0 1440 620"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     preserveAspectRatio="none"
+    aria-hidden="true"
   >
-    <g filter="url(#blur)">
-      <ellipse
-        cx="370"
-        cy="150"
-        rx="280"
-        ry="140"
-        fill="url(#blob1)"
-        fillOpacity="0.45"
-      >
-        <animateTransform attributeName="transform" type="rotate" from="0 370 150" to="360 370 150" dur="15s" repeatCount="indefinite" />
-      </ellipse>
-      <ellipse
-        cx="1120"
-        cy="240"
-        rx="270"
-        ry="130"
-        fill="url(#blob2)"
-        fillOpacity="0.60"
-      >
-        <animateTransform attributeName="transform" type="rotate" from="0 1120 240" to="360 1120 240" dur="18s" repeatCount="indefinite" />
-      </ellipse>
-      <ellipse
-        cx="800"
-        cy="470"
-        rx="220"
-        ry="100"
-        fill="url(#blob3)"
-        fillOpacity="0.45"
-      >
-        <animateTransform attributeName="transform" type="rotate" from="0 800 470" to="360 800 470" dur="22s" repeatCount="indefinite" />
-      </ellipse>
-    </g>
+    {/* Row 1 */}
+    <rect x="0" y="0" width="180" height="180" fill="url(#m1)" opacity="0.6">
+      <animate attributeName="y" values="0;8;0" dur="7s" repeatCount="indefinite" />
+    </rect>
+    <rect x="180" y="0" width="180" height="180" fill="url(#m2)" opacity="0.7">
+      <animate attributeName="y" values="0;-12;0" dur="9s" repeatCount="indefinite" />
+    </rect>
+    <rect x="360" y="0" width="180" height="180" fill="url(#m3)" opacity="0.7">
+      <animate attributeName="y" values="0;18;0" dur="8s" repeatCount="indefinite" />
+    </rect>
+    <rect x="540" y="0" width="180" height="180" fill="url(#m4)" opacity="0.5">
+      <animate attributeName="y" values="0;14;0" dur="10s" repeatCount="indefinite" />
+    </rect>
+    <rect x="720" y="0" width="340" height="180" fill="url(#m5)" opacity="0.52">
+      <animate attributeName="y" values="0;-8;0" dur="7.5s" repeatCount="indefinite" />
+    </rect>
+    {/* Row 2 */}
+    <rect x="90" y="140" width="230" height="200" fill="url(#m2)" opacity="0.5">
+      <animate attributeName="y" values="140;170;140" dur="11s" repeatCount="indefinite" />
+    </rect>
+    <rect x="350" y="186" width="186" height="168" fill="url(#m1)" opacity="0.5">
+      <animate attributeName="x" values="350;373;350" dur="7.5s" repeatCount="indefinite" />
+    </rect>
+    <rect x="680" y="210" width="240" height="150" fill="url(#m3)" opacity="0.6">
+      <animate attributeName="x" values="680;658;680" dur="9.2s" repeatCount="indefinite" />
+    </rect>
+    <rect x="990" y="170" width="370" height="150" fill="url(#m4)" opacity="0.55">
+      <animate attributeName="y" values="170;190;170" dur="8s" repeatCount="indefinite" />
+    </rect>
+    {/* Row 3 - dots/tiles accent near bottom */}
+    <circle cx="220" cy="535" r="40" fill="url(#m5)" opacity="0.35">
+      <animate attributeName="r" values="40;55;40" dur="11s" repeatCount="indefinite" />
+    </circle>
+    <rect x="380" y="480" width="80" height="80" rx="18" fill="url(#m2)" opacity="0.37">
+      <animate attributeName="y" values="480;507;480" dur="7.2s" repeatCount="indefinite" />
+    </rect>
+    <rect x="650" y="470" width="120" height="120" rx="34" fill="url(#m1)" opacity="0.27">
+      <animate attributeName="x" values="650;670;650" dur="9.7s" repeatCount="indefinite" />
+    </rect>
+    <circle cx="850" cy="510" r="36" fill="url(#m4)" opacity="0.28">
+      <animate attributeName="r" values="36;48;36" dur="8.8s" repeatCount="indefinite" />
+    </circle>
+    <rect x="1100" y="490" width="84" height="55" rx="12" fill="url(#m3)" opacity="0.30">
+      <animate attributeName="x" values="1100;1130;1100" dur="7.9s" repeatCount="indefinite" />
+    </rect>
     <defs>
-      <filter id="blur" x="-100" y="-100" width="1640" height="820" filterUnits="userSpaceOnUse">
-        <feGaussianBlur stdDeviation="60" result="blur"/>
-      </filter>
-      <linearGradient id="blob1" x1="0" y1="0" x2="600" y2="200" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#4481eb"/>
-        <stop offset="1" stopColor="#04befe"/>
+      {/* Define branded color blends for gradients */}
+      <linearGradient id="m1" x1="0" y1="0" x2="1" y2="1">
+        <stop stopColor="#51c7fa" /> {/* accent */}
+        <stop offset="1" stopColor="#2f338f" /> {/* secondary */}
       </linearGradient>
-      <linearGradient id="blob2" x1="0" y1="0" x2="600" y2="200" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#a259c6"/>
-        <stop offset="1" stopColor="#4f8cff"/>
+      <linearGradient id="m2" x1="0" y1="1" x2="1" y2="0">
+        <stop stopColor="#4481eb" /> {/* primary */}
+        <stop offset="1" stopColor="#51c7fa" />
       </linearGradient>
-      <linearGradient id="blob3" x1="0" y1="0" x2="400" y2="200" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#6e8efb"/>
-        <stop offset="1" stopColor="#a777e3"/>
+      <linearGradient id="m3" x1="1" y1="1" x2="0" y2="0">
+        <stop stopColor="#2f338f" />
+        <stop offset="1" stopColor="#51c7fa" />
+      </linearGradient>
+      <linearGradient id="m4" x1="0" y1="0" x2="1" y2="1">
+        <stop stopColor="#4f8cff" />
+        <stop offset="1" stopColor="#51c7fa" />
+      </linearGradient>
+      <linearGradient id="m5" x1="0" y1="0" x2="1" y2="0">
+        <stop stopColor="#a259c6" />
+        <stop offset="1" stopColor="#51c7fa" />
       </linearGradient>
     </defs>
   </svg>
@@ -73,13 +93,12 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-700"
-      style={{
-        background: 'linear-gradient(120deg, #131b37 0%, #2f338f 60%, #51c7fa 100%)'
-      }}
+    <section
+      className="relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-700"
     >
-      {/* Animated SVG background blobs */}
-      <AnimatedBlobs />
+      {/* Animated mosaic SVG background (blends with brand accent colors) */}
+      <MosaicBackground />
+
       {/* Foreground content */}
       <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 mb-8 shadow-md">
@@ -120,4 +139,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
