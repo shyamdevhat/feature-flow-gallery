@@ -13,95 +13,45 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-accent transition-colors duration-500">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/20 to-transparent"></div>
-        {/* Subtle moving particles */}
-        <div className="absolute inset-0 pointer-events-none">
-          {[...Array(30)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-white/20 rounded-full animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${2 + Math.random() * 2}s`
-              }}
-            ></div>
-          ))}
-        </div>
-        <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-primary/30 rounded-full animate-float"></div>
-        <div className="absolute top-1/3 right-1/4 w-6 h-6 bg-secondary/30 rounded-full animate-float-delayed"></div>
-        <div className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-accent/30 rounded-full animate-float-reverse"></div>
-      </div>
-      {/* Floating accent clouds */}
-      <div className="absolute top-20 left-20 w-72 h-72 bg-secondary rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
-      <div className="absolute top-40 right-20 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float-delayed"></div>
-      <div className="absolute bottom-40 left-40 w-72 h-72 bg-accent rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float-reverse"></div>
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
-        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8 animate-fade-in">
-          <span className="text-sm text-white/80">
-            Software Center of Excellence · GenAI Solutions
+      {/* Background */}
+      <div className="absolute inset-0 bg-white" />
+      <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
+        <div className="inline-flex items-center gap-2 bg-black/5 backdrop-blur-sm border border-black/10 rounded-full px-4 py-2 mb-8">
+          <span className="text-sm text-black/80 font-medium">
+            Software COE · GenAI
           </span>
         </div>
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
-          <span className="block mb-2 text-xl md:text-2xl font-semibold text-accent tracking-wide">
-            Architecture &amp; Advanced Technology · GenAI Solutions
-          </span>
-          Building Generative AI-Driven Applications for All Business Units
+        <h1 className="text-3xl md:text-5xl font-bold text-black mb-6">
+          GenAI Solutions Repository
         </h1>
-        <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto animate-fade-in">
-          <span className="font-bold text-accent">Software COE</span> develops advanced GenAI solutions spanning every business unit. 
-          This <span className="font-semibold text-primary">Architecture &amp; Advanced Technology</span> workstream delivers innovation and 
-          technical excellence, collaborating with <span className="font-semibold text-secondary">DevOps</span>, <span className="font-semibold text-accent">Agile</span>, and <span className="font-semibold text-primary">Test Automation</span> workstreams to unlock value throughout 
-          our organization.
+        <p className="text-lg text-black/70 mb-10">
+          A curated collection of generative AI applications developed by the Software Center of Excellence.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button 
             size="lg" 
             onClick={scrollToShowcase}
-            className="bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            className="bg-black text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-900 transition-all duration-300"
           >
-            Explore GenAI Applications
+            Explore Applications
           </Button>
           <Button 
             size="lg" 
-            variant="outline" 
+            variant="outline"
             onClick={() => navigate('/request-access')}
-            className="border-white/30 text-white hover:bg-white/10 hover:border-accent px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-105"
+            className="border-black text-black hover:bg-black/5 px-8 py-4 rounded-full text-lg font-semibold"
           >
             Request Access
-          </Button>
-        </div>
-        {/* Quick Links */}
-        <div className="mt-8 flex flex-wrap gap-4 justify-center">
-          <Button 
-            variant="ghost" 
-            size="sm"
-            onClick={() => navigate('/roadmap')}
-            className="text-white/60 hover:text-accent hover:bg-accent/10"
-          >
-            View Roadmap
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            onClick={() => navigate('/feedback')}
-            className="text-white/60 hover:text-accent hover:bg-accent/10"
-          >
-            Share Feedback
           </Button>
         </div>
       </div>
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <ChevronDown className="w-8 h-8 text-white/50" />
+        <ChevronDown className="w-8 h-8 text-black/30" />
       </div>
     </section>
   );
 };
 
 export default Hero;
+
