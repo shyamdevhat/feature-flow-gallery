@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, MessageSquare, Star, Send } from 'lucide-react';
@@ -8,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from "@/lib/supabaseClient";
 
 const Feedback = () => {
   const navigate = useNavigate();
@@ -35,17 +35,25 @@ const Feedback = () => {
     setIsSubmitting(true);
 
     try {
-      // TODO: Replace with actual Supabase integration
-      console.log('Submitting feedback:', feedback);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Save feedback to Supabase
+      const { error } = await supabase
+        .from('feedback')
+        .insert([{
+          name: feedback.name,
+          email: feedback.email,
+          rating: feedback.rating,
+          message: feedback.message,
+          category: feedback.category,
+          created_at: new Date().toISOString(),
+        }]);
+      if (error) {
+        throw error;
+      }
       
       toast({
         title: "Feedback Submitted!",
         description: "Thank you for your valuable feedback. We appreciate your input!",
       });
-      
       // Reset form
       setFeedback({ name: '', email: '', rating: 0, message: '', category: 'general' });
     } catch (error) {

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/lib/supabaseClient";
 
 const AccessRequestForm = () => {
   const { toast } = useToast();
@@ -29,15 +29,25 @@ const AccessRequestForm = () => {
     setIsSubmitting(true);
 
     try {
-      console.log("Submitting request:", formData);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Save request to Supabase
+      const { error } = await supabase
+        .from('access_requests')
+        .insert([{
+          name: formData.name,
+          email: formData.email,
+          purpose: formData.purpose,
+          business_unit: formData.businessUnit,
+          created_at: new Date().toISOString(),
+        }]);
+      if (error) {
+        throw error;
+      }
       toast({
         title: "Request Submitted Successfully!",
         description: "We'll review your request and get back to you within 24 hours.",
       });
       setFormData({ name: "", email: "", purpose: "", businessUnit: "" });
-    } catch {
+    } catch (err: any) {
       toast({
         title: "Error",
         description: "Failed to submit request. Please try again.",
