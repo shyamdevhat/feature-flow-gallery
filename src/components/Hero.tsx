@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -14,20 +15,20 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Enhanced animated background with AI elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-accent transition-colors duration-500">
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-700 via-blue-800 to-slate-600 transition-colors duration-500">
         <CompositeBackground variant="all" />
         
         {/* Enhanced floating accent clouds */}
-        <div className="absolute top-20 left-20 w-96 h-96 bg-secondary rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
-        <div className="absolute top-40 right-20 w-80 h-80 bg-primary rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float-delayed"></div>
-        <div className="absolute bottom-40 left-40 w-72 h-72 bg-accent rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float-reverse"></div>
+        <div className="absolute top-20 left-20 w-96 h-96 bg-blue-600/20 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
+        <div className="absolute top-40 right-20 w-80 h-80 bg-slate-500/20 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float-delayed"></div>
+        <div className="absolute bottom-40 left-40 w-72 h-72 bg-blue-500/20 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float-reverse"></div>
         
         {/* AI-themed geometric patterns */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary/40 rounded-full animate-pulse" style={{ animationDelay: '0s' }}></div>
-          <div className="absolute top-1/3 right-1/4 w-3 h-3 bg-accent/40 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute bottom-1/3 left-1/3 w-1 h-1 bg-secondary/40 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute top-2/3 right-1/3 w-2 h-2 bg-primary/30 rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400/40 rounded-full animate-pulse" style={{ animationDelay: '0s' }}></div>
+          <div className="absolute top-1/3 right-1/4 w-3 h-3 bg-slate-300/40 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-1/3 left-1/3 w-1 h-1 bg-blue-300/40 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-2/3 right-1/3 w-2 h-2 bg-slate-400/30 rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
         </div>
       </div>
       {/* Content */}
@@ -38,20 +39,20 @@ const Hero = () => {
           </span>
         </div>
         <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
-          <span className="block mb-2 text-xl md:text-2xl font-semibold text-accent tracking-wide">
+          <span className="block mb-2 text-xl md:text-2xl font-semibold text-blue-300 tracking-wide">
             GenAI Application Showcase
           </span>
           Explore AI-Powered Solutions
         </h1>
         <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto animate-fade-in">
-          Discover innovative <span className="font-bold text-accent">GenAI applications</span> built for modern businesses. 
+          Discover innovative <span className="font-bold text-blue-300">GenAI applications</span> built for modern businesses. 
           Explore cutting-edge solutions, try demos, and find the perfect AI tools for your needs.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
           <Button 
             size="lg" 
             onClick={scrollToShowcase}
-            className="bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-2xl"
           >
             Explore Applications
           </Button>
@@ -59,7 +60,7 @@ const Hero = () => {
             size="lg" 
             variant="outline" 
             onClick={() => navigate('/request-access')}
-            className="border-white/30 text-white hover:bg-white/10 hover:border-accent px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-105"
+            className="border-white/30 text-white hover:bg-white/10 hover:border-blue-300 px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-105"
           >
             Request Access
           </Button>
@@ -70,7 +71,7 @@ const Hero = () => {
             variant="ghost" 
             size="sm"
             onClick={() => navigate('/roadmap')}
-            className="text-white/60 hover:text-accent hover:bg-accent/10"
+            className="text-white/60 hover:text-blue-300 hover:bg-blue-500/10"
           >
             View Roadmap
           </Button>
@@ -78,7 +79,7 @@ const Hero = () => {
             variant="ghost" 
             size="sm"
             onClick={() => navigate('/feedback')}
-            className="text-white/60 hover:text-accent hover:bg-accent/10"
+            className="text-white/60 hover:text-blue-300 hover:bg-blue-500/10"
           >
             Share Feedback
           </Button>
