@@ -1,4 +1,5 @@
 
+
 import React from "react";
 import { ArrowLeft, Play, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,15 +21,15 @@ const AppHeader: React.FC<AppHeaderProps> = ({ app }) => {
           className="text-white hover:bg-white/10"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Showcase
+          Back to GenAI Showcase
         </Button>
         <div className="flex gap-4">
           <Button 
             onClick={() => navigate(`/app/${app.id}/demo`)}
-            className={`bg-gradient-to-r ${app.gradient ?? 'from-blue-500 to-cyan-500'} hover:opacity-90 text-white`}
+            className={`bg-gradient-to-r ${app.gradient ?? 'from-primary to-accent'} hover:opacity-90 text-white`}
           >
             <Play className="w-4 h-4 mr-2" />
-            Launch App
+            Launch Solution
           </Button>
           <Button variant="outline" className="border-white/30 text-white hover:bg-white/10">
             <Github className="w-4 h-4 mr-2" />
@@ -41,3 +42,4 @@ const AppHeader: React.FC<AppHeaderProps> = ({ app }) => {
 };
 
 export default AppHeader;
+

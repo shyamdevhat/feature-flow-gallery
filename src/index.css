@@ -1,20 +1,21 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+/* Definition of the design system for GenAI/COE. All colors, gradients, fonts, etc should be defined here. */
 
 @layer base {
   :root {
-    --background: 223 54% 6%;           /* deep AI blue */
-    --foreground: 210 38% 98%;          /* near-white */
+    --background: 223 54% 6%;           /* deep GenAI blue */
+    --foreground: 210 38% 98%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 181 69% 46%;             /* teal for AI/COE accent */
+    --primary: 181 69% 46%;             /* teal for GenAI accent */
     --primary-foreground: 210 40% 98%;
 
     --secondary: 202 27% 25%;           /* dark steel blue for workstream variety */
@@ -23,7 +24,7 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 271 53% 80%;              /* brighter accent for AI theme */
+    --accent: 271 53% 80%;              /* brighter accent for GenAI theme */
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
@@ -36,46 +37,32 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 223 54% 4%;           /* slightly darker deep blue for dark mode */
+    --background: 223 54% 4%;
     --foreground: 210 38% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 181 69% 51%;
     --primary-foreground: 210 40% 98%;
-
     --secondary: 202 27% 20%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 271 53% 92%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
@@ -99,3 +86,4 @@
     @apply bg-background text-foreground;
   }
 }
+

@@ -1,4 +1,5 @@
 
+
 import React from "react";
 import { Play, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,18 +15,18 @@ const CtaSection: React.FC<CtaSectionProps> = ({ app }) => {
   return (
     <div className="text-center">
       <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-        <h3 className="text-2xl font-bold text-white mb-4">Ready to Get Started?</h3>
+        <h3 className="text-2xl font-bold text-white mb-4">Start Using GenAI</h3>
         <p className="text-white/70 mb-6">
-          Experience the power of {app.title} and transform your workflow today.
+          Experience {app.title} – a GenAI-powered solution created by the Software COE for every business unit.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button 
             size="lg"
             onClick={() => navigate(`/app/${app.id}/demo`)}
-            className={`bg-gradient-to-r ${app.gradient ?? 'from-blue-500 to-cyan-500'} hover:opacity-90 text-white`}
+            className={`bg-gradient-to-r ${app.gradient ?? 'from-primary to-accent'} hover:opacity-90 text-white`}
           >
             <Play className="w-5 h-5 mr-2" />
-            Launch Application
+            Launch Solution
           </Button>
           <Button 
             size="lg"
@@ -50,3 +51,4 @@ const CtaSection: React.FC<CtaSectionProps> = ({ app }) => {
 };
 
 export default CtaSection;
+

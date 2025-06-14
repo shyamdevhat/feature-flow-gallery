@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { ChevronDown, Sparkles } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,8 +13,8 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Enhanced animated background for consistency */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-background transition-colors duration-500">
+      {/* Animated background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-accent transition-colors duration-500">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/20 to-transparent"></div>
         {/* Subtle moving particles */}
@@ -43,34 +44,34 @@ const Hero = () => {
       <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
         <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8 animate-fade-in">
           <span className="text-sm text-white/80">
-            Carrier Global · AI Solutions Center of Excellence
+            Software Center of Excellence · GenAI Solutions
           </span>
         </div>
         <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
-          <span className="block mb-2 text-xl md:text-2xl font-semibold text-primary tracking-wide">
-            Software COE · Architecture &amp; Advanced Technology
+          <span className="block mb-2 text-xl md:text-2xl font-semibold text-accent tracking-wide">
+            Architecture &amp; Advanced Technology · GenAI Solutions
           </span>
-          Building AI-Driven Solutions Across All Carrier Business Units
+          Building Generative AI-Driven Applications for All Business Units
         </h1>
         <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto animate-fade-in">
-          <span className="font-bold text-accent">Software COE</span> is an internal Carrier Global team pioneering AI-driven solutions
-          that empower every business unit. Our <span className="font-semibold text-primary">Architecture &amp; Advanced Technology</span> workstream
-          drives innovation together with <span className="font-semibold text-secondary">DevOps</span>, <span className="font-semibold text-accent">Agile</span>, and <span className="font-semibold text-primary">Test Automation</span>,
-          creating value across products and operations.
+          <span className="font-bold text-accent">Software COE</span> develops advanced GenAI solutions spanning every business unit. 
+          This <span className="font-semibold text-primary">Architecture &amp; Advanced Technology</span> workstream delivers innovation and 
+          technical excellence, collaborating with <span className="font-semibold text-secondary">DevOps</span>, <span className="font-semibold text-accent">Agile</span>, and <span className="font-semibold text-primary">Test Automation</span> workstreams to unlock value throughout 
+          our organization.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
           <Button 
             size="lg" 
             onClick={scrollToShowcase}
-            className="bg-gradient-to-r from-primary to-secondary hover:from-accent hover:to-primary text-white border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            className="bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-2xl"
           >
-            Explore AI Applications
+            Explore GenAI Applications
           </Button>
           <Button 
             size="lg" 
             variant="outline" 
             onClick={() => navigate('/request-access')}
-            className="border-white/30 text-white hover:bg-white/10 hover:border-primary px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-105"
+            className="border-white/30 text-white hover:bg-white/10 hover:border-accent px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-105"
           >
             Request Access
           </Button>
@@ -81,7 +82,7 @@ const Hero = () => {
             variant="ghost" 
             size="sm"
             onClick={() => navigate('/roadmap')}
-            className="text-white/60 hover:text-primary hover:bg-primary/10"
+            className="text-white/60 hover:text-accent hover:bg-accent/10"
           >
             View Roadmap
           </Button>
@@ -89,7 +90,7 @@ const Hero = () => {
             variant="ghost" 
             size="sm"
             onClick={() => navigate('/feedback')}
-            className="text-white/60 hover:text-primary hover:bg-primary/10"
+            className="text-white/60 hover:text-accent hover:bg-accent/10"
           >
             Share Feedback
           </Button>

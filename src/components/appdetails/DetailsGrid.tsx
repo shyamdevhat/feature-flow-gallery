@@ -1,4 +1,5 @@
 
+
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { CheckCircle, Database } from "lucide-react";
@@ -16,7 +17,7 @@ const DetailsGrid: React.FC<DetailsGridProps> = ({ app, gradient }) => (
     <Card className="bg-white/5 backdrop-blur-sm border-white/10 flex flex-col min-h-[340px]">
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
-          <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${gradient ?? 'from-blue-500 to-cyan-500'} flex items-center justify-center`}>
+          <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${gradient ?? 'from-primary to-accent'} flex items-center justify-center`}>
             <Database className="w-4 h-4 text-white" />
           </div>
           Architecture
@@ -24,7 +25,8 @@ const DetailsGrid: React.FC<DetailsGridProps> = ({ app, gradient }) => (
       </CardHeader>
       <CardContent className="flex-1 flex flex-col">
         <p className="text-white/70 mb-4">
-          Explore architecture diagrams, images, and documents as uploaded by the admin.
+          Explore GenAI solution architectures and supporting assets developed by the 
+          <span className="text-accent font-semibold"> Architecture &amp; Advanced Technology</span> team.
         </p>
         {/* Only gallery, no upload option */}
         <AppGallery applicationId={app.id} gradient={gradient} hideUpload />
@@ -34,7 +36,7 @@ const DetailsGrid: React.FC<DetailsGridProps> = ({ app, gradient }) => (
     <Card className="bg-white/5 backdrop-blur-sm border-white/10">
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
-          <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${gradient ?? 'from-blue-500 to-cyan-500'} flex items-center justify-center`}>
+          <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${gradient ?? 'from-primary to-accent'} flex items-center justify-center`}>
             <CheckCircle className="w-4 h-4 text-white" />
           </div>
           Objective
@@ -48,3 +50,4 @@ const DetailsGrid: React.FC<DetailsGridProps> = ({ app, gradient }) => (
 );
 
 export default DetailsGrid;
+
