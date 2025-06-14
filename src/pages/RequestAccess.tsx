@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Send } from "lucide-react";
@@ -5,15 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import AccessRequestForm from "@/components/AccessRequestForm";
 import AccessBenefits from "@/components/AccessBenefits";
-import CompositeBackground from "@/components/backgrounds/CompositeBackground";
 
 const RequestAccess = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary via-secondary to-accent transition-colors duration-500 relative">
-      <CompositeBackground variant="brain" />
-      
+    <div className="min-h-screen bg-gradient-to-br from-primary via-secondary to-accent">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-black/20 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center">
@@ -28,7 +26,7 @@ const RequestAccess = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-12 relative z-10">
+      <div className="max-w-4xl mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Request Access to our

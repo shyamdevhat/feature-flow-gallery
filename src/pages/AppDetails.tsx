@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Play, Github, CheckCircle, Zap, Database, Code, Globe, Smartphone, Shield, Star } from 'lucide-react';
@@ -52,7 +51,7 @@ const AppDetails = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary via-secondary to-accent transition-colors duration-500">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
         <span className="text-white/80 text-lg">Loading application details…</span>
       </div>
     );
@@ -60,7 +59,7 @@ const AppDetails = () => {
 
   if (!app) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary via-secondary to-accent transition-colors duration-500 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
         <div className="text-center text-white">
           <h2 className="text-2xl font-bold mb-4">Application Not Found</h2>
           <Button onClick={() => navigate('/')}>Back to Home</Button>
@@ -89,7 +88,7 @@ const AppDetails = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary via-secondary to-accent transition-colors duration-500">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <AppHeader app={app} />
       <div className="max-w-7xl mx-auto px-4 py-12">
         <HeroSection app={app} />
