@@ -3,18 +3,43 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import type { Application } from "@/types/applications";
 
-const fetchApplications = async (): Promise<Application[]> => {
-  const { data, error } = await supabase
+/**
+ * Fetch paginated applications and total count from Supabase.
+ * @param page 1-based page number
+ * @param limit number of items per page
+ */
+const fetchApplications = async ({
+  page,
+  limit,
+}: {
+  page: number;
+  limit: number;
+}): Promise<{ data: Application[]; total: number }> => {
+  const from = (page - 1) * limit;
+  const to = from + limit - 1;
+
+  // Fetch the page of items
+  const { data, error, count } = await supabase
     .from("applications")
-    .select("*")
-    .order("created_at", { ascending: true });
+    .select("*", { count: "exact" })
+    .order("created_at", { ascending: true })
+    .range(from, to);
+
   if (error) throw error;
-  return data as Application[];
+
+  return {
+    data: data as Application[],
+    total: count ?? 0,
+  };
 };
 
-export const useApplications = () => {
+/**
+ * useApplications returns paginated apps and total count
+ */
+export const useApplications = (page: number, limit: number) => {
   return useQuery({
-    queryKey: ["applications"],
-    queryFn: fetchApplications,
+    queryKey: ["applications", page, limit],
+    queryFn: () => fetchApplications({ page, limit }),
+    keepPreviousData: true, // keeps old data during fetch to avoid flashing
   });
 };

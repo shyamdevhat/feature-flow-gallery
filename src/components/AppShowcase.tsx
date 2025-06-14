@@ -21,18 +21,17 @@ const appIcons: Record<string, React.ElementType> = {
   Code,
 };
 
+const APPS_PER_PAGE = 6;
+
 const AppShowcase = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const appsPerPage = 6;
 
-  const { data: apps, isLoading, isError } = useApplications();
+  // Use paginated hook
+  const { data, isLoading, isError } = useApplications(currentPage, APPS_PER_PAGE);
 
-  // Pagination calculations
-  const totalPages = apps ? Math.ceil(apps.length / appsPerPage) : 1;
-  const startIndex = (currentPage - 1) * appsPerPage;
-  const currentApps = apps
-    ? apps.slice(startIndex, startIndex + appsPerPage)
-    : [];
+  const apps = data?.data || [];
+  const totalApps = data?.total || 0;
+  const totalPages = Math.max(Math.ceil(totalApps / APPS_PER_PAGE), 1);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -65,7 +64,7 @@ const AppShowcase = () => {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {currentApps.map((app, index) => {
+          {apps.map((app, index) => {
             const Icon = appIcons[app.icon] || Code;
             return (
               <AppCard
@@ -85,7 +84,7 @@ const AppShowcase = () => {
         </div>
 
         {/* Pagination */}
-        {apps && apps.length > appsPerPage && (
+        {totalApps > APPS_PER_PAGE && (
           <div className="flex justify-center">
             <Pagination>
               <PaginationContent>
