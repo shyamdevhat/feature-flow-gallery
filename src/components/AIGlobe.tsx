@@ -1,5 +1,5 @@
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 
 // Full-parent animated particles background (fills the Hero section only)
 const PARTICLE_COUNT = 34;
@@ -53,55 +53,61 @@ export default function AIGlobe() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particles = useRef<Particle[] | null>(null);
   const animationFrame = useRef<number | null>(null);
+  const lastSize = useRef<{ width: number; height: number }>({ width: 0, height: 0 });
 
-  // Resize canvas and particles on its parent container resize
-  useEffect(() => {
-    function resizeCanvas() {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const dpr = window.devicePixelRatio || 1;
-      // Use parent node's dimensions
-      const parent = canvas.parentElement;
-      if (!parent) return;
-      const parentRect = parent.getBoundingClientRect();
-      canvas.width = parentRect.width * dpr;
-      canvas.height = parentRect.height * dpr;
+  // Efficient resize logic
+  const handleResize = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const dpr = window.devicePixelRatio || 1;
+    const parent = canvas.parentElement;
+    if (!parent) return;
+    const parentRect = parent.getBoundingClientRect();
+    const width = Math.round(parentRect.width * dpr);
+    const height = Math.round(parentRect.height * dpr);
+
+    // Only resize if actually changed
+    if (lastSize.current.width !== width || lastSize.current.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
       canvas.style.width = "100%";
       canvas.style.height = "100%";
-      // Re-create particles to fill current area
-      particles.current = createParticles(canvas.width, canvas.height);
+      lastSize.current = { width, height };
+      particles.current = createParticles(width, height);
     }
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-    return () => window.removeEventListener("resize", resizeCanvas);
   }, []);
 
-  // Animate particles in morphing orbits and random walks
+  // Initial mount and listen for resize events, throttling resize logic
+  useEffect(() => {
+    handleResize();
+    let resizeTimeout: number | undefined;
+    const onResize = () => {
+      window.clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        handleResize();
+      }, 60); // debounce a bit for rapid resize events
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.clearTimeout(resizeTimeout);
+    };
+  }, [handleResize]);
+
+  // Only animate, do not recreate on each frame
   useEffect(() => {
     function animate() {
       const canvas = canvasRef.current;
-      const ctx = canvas?.getContext("2d");
-      if (!canvas || !ctx) return;
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
 
-      const dpr = window.devicePixelRatio || 1;
-      // Use parent node's dimensions for resizing
-      const parent = canvas.parentElement;
-      if (parent) {
-        const parentRect = parent.getBoundingClientRect();
-        const desiredWidth = parentRect.width * dpr;
-        const desiredHeight = parentRect.height * dpr;
-        if (canvas.width !== desiredWidth || canvas.height !== desiredHeight) {
-          canvas.width = desiredWidth;
-          canvas.height = desiredHeight;
-          particles.current = createParticles(desiredWidth, desiredHeight);
-        }
-      }
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+      // Draw particles
       if (!particles.current) {
         particles.current = createParticles(canvas.width, canvas.height);
       }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const now = Date.now();
       for (let i = 0; i < particles.current.length; i++) {
@@ -111,7 +117,7 @@ export default function AIGlobe() {
         p.x += p.vx + Math.cos(p.t + i) * 0.13;
         p.y += p.vy + Math.sin(p.t + i) * 0.19;
 
-        // Bounce off edges in the section area
+        // Bounce off edges
         if (p.x < p.r * 0.7) {
           p.x = p.r * 0.7;
           p.vx = Math.abs(p.vx);
@@ -129,7 +135,6 @@ export default function AIGlobe() {
           p.vy = -Math.abs(p.vy);
         }
 
-        // Morph radius & alpha
         p.r = p.baseR * (0.82 + 0.19 * Math.sin(now * 0.0007 + i * 0.9));
         p.alpha = 0.6 + 0.24 * Math.sin(now * 0.0016 + i * 0.8);
 
@@ -189,13 +194,12 @@ export default function AIGlobe() {
     }
 
     animationFrame.current = requestAnimationFrame(animate);
-
     return () => {
       if (animationFrame.current) cancelAnimationFrame(animationFrame.current);
     };
   }, []);
 
-  // Canvas covers all of parent only (absolutely positioned, not fixed)
+  // Canvas covers all of parent only (Hero section), not fixed
   return (
     <div
       className="pointer-events-none absolute inset-0 z-0 select-none"
