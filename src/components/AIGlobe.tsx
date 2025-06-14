@@ -1,39 +1,95 @@
 
-import React from 'react';
+import React, { Suspense, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import * as THREE from "three";
+
+// Spinning globe mesh
+function SpinningGlobe() {
+  const mesh = useRef<THREE.Mesh>(null);
+  useFrame(() => {
+    if (mesh.current) {
+      mesh.current.rotation.y += 0.003;
+      mesh.current.rotation.x = Math.sin(Date.now() * 0.0003) * 0.05;
+    }
+  });
+  return (
+    <mesh ref={mesh}>
+      <sphereGeometry args={[1.8, 64, 64]} />
+      <meshStandardMaterial
+        color="#17e3bf"
+        emissive="#a08bfa"
+        emissiveIntensity={0.41}
+        roughness={0.32}
+        metalness={0.45}
+        wireframe={false}
+      />
+    </mesh>
+  );
+}
+
+// Animated arcs
+function NetworkArcs() {
+  // 20 random arcs
+  const arcs = Array.from({ length: 16 }).map((_, i) => {
+    const phi = Math.random() * Math.PI;
+    const theta1 = Math.random() * 2 * Math.PI;
+    const theta2 = Math.random() * 2 * Math.PI;
+    const r = 1.88;
+    const p1 = [
+      r * Math.sin(phi) * Math.cos(theta1),
+      r * Math.cos(phi),
+      r * Math.sin(phi) * Math.sin(theta1)
+    ];
+    const p2 = [
+      r * Math.sin(phi) * Math.cos(theta2),
+      r * Math.cos(phi),
+      r * Math.sin(phi) * Math.sin(theta2)
+    ];
+    const mid = [
+      (p1[0] + p2[0]) / 2 * 1.08,
+      (p1[1] + p2[1]) / 2 * 1.15,
+      (p1[2] + p2[2]) / 2 * 1.08
+    ];
+    const color = new THREE.Color(`hsl(${190 + i * 8}, 74%, 71%)`);
+    return (
+      <group key={i}>
+        <mesh>
+          <tubeGeometry args={[
+            new THREE.CatmullRomCurve3([
+              new THREE.Vector3(...p1),
+              new THREE.Vector3(...mid),
+              new THREE.Vector3(...p2)
+            ]),
+            24, 0.012, 8, false
+          ]} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.48} transparent opacity={0.54} />
+        </mesh>
+      </group>
+    );
+  });
+  return <>{arcs}</>;
+}
 
 export default function AIGlobe() {
   return (
-    <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
-      <div className="relative w-96 h-96">
-        {/* Main globe */}
-        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 opacity-60 animate-spin" 
-             style={{ animationDuration: '20s' }}>
-        </div>
-        
-        {/* Inner glow */}
-        <div className="absolute inset-4 rounded-full bg-gradient-to-br from-cyan-200 via-blue-300 to-purple-400 opacity-40 animate-pulse">
-        </div>
-        
-        {/* Orbiting elements */}
-        <div className="absolute inset-0 animate-spin" style={{ animationDuration: '15s' }}>
-          <div className="absolute top-0 left-1/2 w-2 h-2 bg-cyan-300 rounded-full transform -translate-x-1/2 -translate-y-1"></div>
-          <div className="absolute bottom-0 left-1/2 w-2 h-2 bg-purple-300 rounded-full transform -translate-x-1/2 translate-y-1"></div>
-        </div>
-        
-        {/* Network lines effect */}
-        <div className="absolute inset-0 opacity-30">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute top-1/2 left-1/2 w-px h-32 bg-gradient-to-t from-transparent via-cyan-300 to-transparent transform -translate-x-1/2 -translate-y-1/2 animate-pulse"
-              style={{
-                transform: `translate(-50%, -50%) rotate(${i * 45}deg)`,
-                animationDelay: `${i * 0.2}s`
-              }}
-            />
-          ))}
-        </div>
-      </div>
+    <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none select-none">
+      <Canvas
+        camera={{ position: [0, 0, 6], fov: 46 }}
+        style={{
+          width: "380px",
+          height: "380px",
+          maxWidth: "95vw",
+          maxHeight: "55vw"
+        }}
+        gl={{ alpha: true, antialias: true }}
+      >
+        <ambientLight intensity={0.55} />
+        <directionalLight position={[3, 5, 8]} intensity={1.3} color={"#fff6fa"} />
+        <Suspense fallback={null}>
+          <SpinningGlobe />
+          <NetworkArcs />
+        </Suspense>
+      </Canvas>
     </div>
   );
 }
