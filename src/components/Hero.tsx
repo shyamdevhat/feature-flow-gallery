@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import AIGlobe from './AIGlobe';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -13,6 +13,9 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Animated AI globe background */}
+      <AIGlobe />
+
       {/* Animated background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-accent transition-colors duration-500">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
