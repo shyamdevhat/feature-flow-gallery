@@ -117,6 +117,7 @@ export type Database = {
           created_at: string | null
           description: string
           features: string[] | null
+          getting_started_markdown: string | null
           gradient: string | null
           icon: string | null
           id: string
@@ -128,6 +129,7 @@ export type Database = {
           created_at?: string | null
           description: string
           features?: string[] | null
+          getting_started_markdown?: string | null
           gradient?: string | null
           icon?: string | null
           id?: string
@@ -139,6 +141,7 @@ export type Database = {
           created_at?: string | null
           description?: string
           features?: string[] | null
+          getting_started_markdown?: string | null
           gradient?: string | null
           icon?: string | null
           id?: string

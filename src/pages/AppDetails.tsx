@@ -97,7 +97,10 @@ const AppDetails = () => {
         {/* Roadmap Section */}
         <AppRoadmap applicationId={app.id} gradient={app.gradient} />
         <Benefits features={app.features} gradient={app.gradient} />
-        <GettingStarted gradient={app.gradient} />
+        <GettingStarted
+          gradient={app.gradient}
+          markdown={app.getting_started_markdown || undefined}
+        />
         <Testimonials appTitle={app.title} />
         <CtaSection app={app} />
       </div>
