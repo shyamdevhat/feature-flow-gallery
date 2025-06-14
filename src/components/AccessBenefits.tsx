@@ -1,8 +1,14 @@
 
 import React from "react";
-import { icons } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAccessBenefits } from "@/hooks/useAccessBenefits";
+
+// Only allowed icons should be added here for dynamic display
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  CheckCircle,
+  // Add other allowed icons here as needed
+};
 
 const AccessBenefits = () => {
   const { data: benefits, isLoading, error } = useAccessBenefits();
@@ -16,7 +22,7 @@ const AccessBenefits = () => {
         <div className="col-span-3 text-center text-red-500">Failed to load benefits.</div>
       )}
       {(benefits ?? []).map((benefit, index) => {
-        const LucideIcon = icons[benefit.icon as keyof typeof icons] ?? icons.CheckCircle;
+        const LucideIcon = iconMap[benefit.icon] ?? CheckCircle;
         return (
           <Card
             key={benefit.id}
