@@ -3,6 +3,7 @@ import React from 'react';
 import Hero from '../components/Hero';
 import AppShowcase from '../components/AppShowcase';
 import FeaturesSection from '../components/FeaturesSection';
+import TestimonialsSection from '../components/TestimonialsSection';
 import Footer from '../components/Footer';
 
 const Index = () => {
@@ -11,6 +12,7 @@ const Index = () => {
       <Hero />
       <AppShowcase />
       <FeaturesSection />
+      <TestimonialsSection />
       <Footer />
     </div>
   );

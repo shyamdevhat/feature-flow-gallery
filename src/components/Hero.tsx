@@ -2,8 +2,15 @@
 import React from 'react';
 import { ChevronDown, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const scrollToShowcase = () => {
+    document.getElementById('app-showcase')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Enhanced animated background */}
@@ -18,7 +25,7 @@ const Hero = () => {
         
         {/* Moving particles */}
         <div className="absolute inset-0">
-          {[...Array(20)].map((_, i) => (
+          {[...Array(30)].map((_, i) => (
             <div
               key={i}
               className="absolute w-1 h-1 bg-white/30 rounded-full animate-pulse"
@@ -31,6 +38,11 @@ const Hero = () => {
             ></div>
           ))}
         </div>
+
+        {/* AI-themed floating elements */}
+        <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-cyan-400/60 rounded-full animate-float"></div>
+        <div className="absolute top-1/3 right-1/4 w-6 h-6 bg-purple-400/60 rounded-full animate-float-delayed"></div>
+        <div className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-pink-400/60 rounded-full animate-float-reverse"></div>
       </div>
       
       {/* Enhanced floating elements with animation */}
@@ -42,7 +54,7 @@ const Hero = () => {
       <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
         <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8 animate-fade-in">
           <Sparkles className="w-4 h-4 text-purple-400 animate-spin-slow" />
-          <span className="text-sm text-white/80">Next-Gen App Showcase</span>
+          <span className="text-sm text-white/80">Next-Gen AI & Generative AI Showcase</span>
         </div>
         
         <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-in">
@@ -50,27 +62,49 @@ const Hero = () => {
           <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent animate-gradient">
             {" "}Future{" "}
           </span>
-          of Applications
+          of AI Applications
         </h1>
         
         <p className="text-xl md:text-2xl text-white/70 mb-12 max-w-3xl mx-auto animate-fade-in">
-          Discover cutting-edge applications built with React, Python, and MongoDB. 
-          Interactive, intuitive, and designed for tomorrow.
+          Discover cutting-edge AI and Generative AI applications built with React, Python, and MongoDB. 
+          Interactive, intelligent, and designed for tomorrow's challenges.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
           <Button 
             size="lg" 
+            onClick={scrollToShowcase}
             className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-2xl"
           >
-            Explore Applications
+            Explore AI Applications
           </Button>
           <Button 
             size="lg" 
             variant="outline" 
+            onClick={() => navigate('/request-access')}
             className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-105"
           >
-            View Features
+            Request Access
+          </Button>
+        </div>
+
+        {/* Quick Links */}
+        <div className="mt-8 flex flex-wrap gap-4 justify-center">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={() => navigate('/roadmap')}
+            className="text-white/60 hover:text-white hover:bg-white/10"
+          >
+            View Roadmap
+          </Button>
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={() => navigate('/feedback')}
+            className="text-white/60 hover:text-white hover:bg-white/10"
+          >
+            Share Feedback
           </Button>
         </div>
       </div>
