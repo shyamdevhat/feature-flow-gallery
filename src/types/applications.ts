@@ -1,4 +1,3 @@
-
 export type Application = {
   id: string;
   title: string;
@@ -9,4 +8,5 @@ export type Application = {
   gradient: string;
   image_url: string;
   created_at: string;
+  getting_started_markdown?: string | null;
 };
