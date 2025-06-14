@@ -1,83 +1,105 @@
 
-import React from "react";
-import { ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import AIGlobe from "./AIGlobe";
+import React from 'react';
+import { ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const navigate = useNavigate();
 
   const scrollToShowcase = () => {
-    document.getElementById("app-showcase")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById('app-showcase')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background transition-colors duration-500">
-      <AIGlobe />
-
-      {/* Main content */}
-      <div className="relative z-10 text-center px-4 max-w-3xl mx-auto animate-fade-in">
-        <span className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-accent/50 backdrop-blur-sm border border-white/10 rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-widest text-white/90 mb-8 shadow-sm">
-          Advance Technology &bull; GenAI Center of Excellence
-        </span>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent drop-shadow-xl">
-          Transforming Business with
-          <span className="block mt-2 text-4xl md:text-5xl font-black tracking-tight">
-            Generative AI&nbsp;Applications
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-accent transition-colors duration-500">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/20 to-transparent"></div>
+        {/* Subtle moving particles */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(30)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white/20 rounded-full animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 2}s`,
+                animationDuration: `${2 + Math.random() * 2}s`
+              }}
+            ></div>
+          ))}
+        </div>
+        <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-primary/30 rounded-full animate-float"></div>
+        <div className="absolute top-1/3 right-1/4 w-6 h-6 bg-secondary/30 rounded-full animate-float-delayed"></div>
+        <div className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-accent/30 rounded-full animate-float-reverse"></div>
+      </div>
+      {/* Floating accent clouds */}
+      <div className="absolute top-20 left-20 w-72 h-72 bg-secondary rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
+      <div className="absolute top-40 right-20 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float-delayed"></div>
+      <div className="absolute bottom-40 left-40 w-72 h-72 bg-accent rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float-reverse"></div>
+      {/* Content */}
+      <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
+        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8 animate-fade-in">
+          <span className="text-sm text-white/80">
+            Software Center of Excellence · GenAI Solutions
           </span>
+        </div>
+        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
+          <span className="block mb-2 text-xl md:text-2xl font-semibold text-accent tracking-wide">
+            Architecture &amp; Advanced Technology · GenAI Solutions
+          </span>
+          Building Generative AI-Driven Applications for All Business Units
         </h1>
-        <p className="text-lg md:text-xl text-white/80 mb-9 font-medium leading-relaxed max-w-2xl mx-auto">
-          <span className="font-bold text-accent">COE</span> delivers <span className="font-semibold text-primary">cutting-edge GenAI</span> solutions to every business unit.<br />
-          Advance Architecture &amp; Technology enables rapid innovation and intelligent automation for your success.
+        <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto animate-fade-in">
+          <span className="font-bold text-accent">Software COE</span> develops advanced GenAI solutions spanning every business unit. 
+          This <span className="font-semibold text-primary">Architecture &amp; Advanced Technology</span> workstream delivers innovation and 
+          technical excellence, collaborating with <span className="font-semibold text-secondary">DevOps</span>, <span className="font-semibold text-accent">Agile</span>, and <span className="font-semibold text-primary">Test Automation</span> workstreams to unlock value throughout 
+          our organization.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-7">
-          <Button
-            size="lg"
+        <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
+          <Button 
+            size="lg" 
             onClick={scrollToShowcase}
-            className="bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white border-0 px-8 py-4 text-lg font-semibold rounded-full shadow-lg transition-all duration-300 hover:scale-105"
+            className="bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-2xl"
           >
-            Explore GenAI Apps
+            Explore GenAI Applications
           </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            onClick={() => navigate("/request-access")}
-            className="border-white/30 text-white px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-accent"
+          <Button 
+            size="lg" 
+            variant="outline" 
+            onClick={() => navigate('/request-access')}
+            className="border-white/30 text-white hover:bg-white/10 hover:border-accent px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-105"
           >
             Request Access
           </Button>
         </div>
         {/* Quick Links */}
-        <div className="flex flex-wrap gap-3 justify-center text-sm">
-          <Button
-            variant="ghost"
+        <div className="mt-8 flex flex-wrap gap-4 justify-center">
+          <Button 
+            variant="ghost" 
             size="sm"
-            onClick={() => navigate("/roadmap")}
-            className="text-white/70 hover:text-accent hover:bg-accent/10"
+            onClick={() => navigate('/roadmap')}
+            className="text-white/60 hover:text-accent hover:bg-accent/10"
           >
-            Roadmap
+            View Roadmap
           </Button>
-          <Button
-            variant="ghost"
+          <Button 
+            variant="ghost" 
             size="sm"
-            onClick={() => navigate("/feedback")}
-            className="text-white/70 hover:text-accent hover:bg-accent/10"
+            onClick={() => navigate('/feedback')}
+            className="text-white/60 hover:text-accent hover:bg-accent/10"
           >
-            Feedback
+            Share Feedback
           </Button>
         </div>
       </div>
-
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce pointer-events-none z-20">
-        <ChevronDown className="w-8 h-8 text-white/40 drop-shadow" />
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <ChevronDown className="w-8 h-8 text-white/50" />
       </div>
-
-      {/* Smoother floating backgrounds */}
-      <div className="absolute top-10 left-0 w-96 h-72 bg-primary/20 rounded-full filter blur-2xl opacity-30" />
-      <div className="absolute top-40 right-0 w-96 h-72 bg-accent/30 rounded-full filter blur-2xl opacity-25" />
-      <div className="absolute bottom-32 left-1/4 w-80 h-64 bg-secondary/30 rounded-full filter blur-2xl opacity-30" />
     </section>
   );
 };

@@ -7,7 +7,7 @@
 
 @layer base {
   :root {
-    --background: 220 30% 9%;           /* new corporate blue background */
+    --background: 223 54% 6%;           /* deep GenAI blue */
     --foreground: 210 38% 98%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -47,7 +47,7 @@
   }
 
   .dark {
-    --background: 220 30% 7%;
+    --background: 223 54% 4%;
     --foreground: 210 38% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
