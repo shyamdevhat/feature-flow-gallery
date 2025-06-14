@@ -9,6 +9,33 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      access_benefits: {
+        Row: {
+          description: string
+          icon: string
+          icon_color: string | null
+          id: string
+          sort_order: number | null
+          title: string
+        }
+        Insert: {
+          description: string
+          icon: string
+          icon_color?: string | null
+          id?: string
+          sort_order?: number | null
+          title: string
+        }
+        Update: {
+          description?: string
+          icon?: string
+          icon_color?: string | null
+          id?: string
+          sort_order?: number | null
+          title?: string
+        }
+        Relationships: []
+      }
       applications: {
         Row: {
           created_at: string | null
@@ -42,6 +69,63 @@ export type Database = {
           image_url?: string | null
           tech?: string[] | null
           title?: string
+        }
+        Relationships: []
+      }
+      features: {
+        Row: {
+          description: string
+          icon: string
+          id: string
+          sort_order: number | null
+          title: string
+        }
+        Insert: {
+          description: string
+          icon: string
+          id?: string
+          sort_order?: number | null
+          title: string
+        }
+        Update: {
+          description?: string
+          icon?: string
+          id?: string
+          sort_order?: number | null
+          title?: string
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          avatar_url: string | null
+          company: string
+          id: string
+          message: string
+          name: string
+          rating: number
+          role: string
+          sort_order: number | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          company: string
+          id?: string
+          message: string
+          name: string
+          rating: number
+          role: string
+          sort_order?: number | null
+        }
+        Update: {
+          avatar_url?: string | null
+          company?: string
+          id?: string
+          message?: string
+          name?: string
+          rating?: number
+          role?: string
+          sort_order?: number | null
         }
         Relationships: []
       }
