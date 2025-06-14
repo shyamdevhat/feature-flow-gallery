@@ -1,7 +1,7 @@
 
 import React, { useRef, useEffect } from "react";
 
-// Full viewport animated particles background, covering all areas organically
+// Full-parent animated particles background (fills the Hero section only)
 const PARTICLE_COUNT = 34;
 const PARTICLE_COLORS = [
   "#93f6f1", "#adadfd", "#e2e0fb", "#84f1e9",
@@ -29,7 +29,6 @@ type Particle = {
 function createParticles(canvasWidth: number, canvasHeight: number): Particle[] {
   const arr: Particle[] = [];
   for (let i = 0; i < PARTICLE_COUNT; i++) {
-    // Distribute particles throughout the available space
     const baseR = random(9, 22);
     const x = random(0, canvasWidth);
     const y = random(0, canvasHeight);
@@ -55,17 +54,21 @@ export default function AIGlobe() {
   const particles = useRef<Particle[] | null>(null);
   const animationFrame = useRef<number | null>(null);
 
-  // Resize canvas and particles on window resize
+  // Resize canvas and particles on its parent container resize
   useEffect(() => {
     function resizeCanvas() {
       const canvas = canvasRef.current;
       if (!canvas) return;
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = "100vw";
-      canvas.style.height = "100vh";
-      // Re-create particles to fill current window
+      // Use parent node's dimensions
+      const parent = canvas.parentElement;
+      if (!parent) return;
+      const parentRect = parent.getBoundingClientRect();
+      canvas.width = parentRect.width * dpr;
+      canvas.height = parentRect.height * dpr;
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      // Re-create particles to fill current area
       particles.current = createParticles(canvas.width, canvas.height);
     }
     resizeCanvas();
@@ -75,39 +78,40 @@ export default function AIGlobe() {
 
   // Animate particles in morphing orbits and random walks
   useEffect(() => {
-    let lastWidth = window.innerWidth;
-    let lastHeight = window.innerHeight;
-
     function animate() {
       const canvas = canvasRef.current;
       const ctx = canvas?.getContext("2d");
       if (!canvas || !ctx) return;
 
       const dpr = window.devicePixelRatio || 1;
-      // Handle resize
-      if (canvas.width !== window.innerWidth * dpr || canvas.height !== window.innerHeight * dpr) {
-        canvas.width = window.innerWidth * dpr;
-        canvas.height = window.innerHeight * dpr;
-        particles.current = createParticles(canvas.width, canvas.height);
-        lastWidth = window.innerWidth;
-        lastHeight = window.innerHeight;
+      // Use parent node's dimensions for resizing
+      const parent = canvas.parentElement;
+      if (parent) {
+        const parentRect = parent.getBoundingClientRect();
+        const desiredWidth = parentRect.width * dpr;
+        const desiredHeight = parentRect.height * dpr;
+        if (canvas.width !== desiredWidth || canvas.height !== desiredHeight) {
+          canvas.width = desiredWidth;
+          canvas.height = desiredHeight;
+          particles.current = createParticles(desiredWidth, desiredHeight);
+        }
       }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if (!particles.current) particles.current = createParticles(canvas.width, canvas.height);
+      if (!particles.current) {
+        particles.current = createParticles(canvas.width, canvas.height);
+      }
 
       const now = Date.now();
-      // Animate all particles
       for (let i = 0; i < particles.current.length; i++) {
         const p = particles.current[i];
 
-        // Morph position (mild circular wobble + floating drift)
         p.t += 0.010 + 0.003 * Math.sin(now * 0.00023 + i * 0.38);
         p.x += p.vx + Math.cos(p.t + i) * 0.13;
         p.y += p.vy + Math.sin(p.t + i) * 0.19;
 
-        // Bounce off edges (invisible walls)
+        // Bounce off edges in the section area
         if (p.x < p.r * 0.7) {
           p.x = p.r * 0.7;
           p.vx = Math.abs(p.vx);
@@ -153,29 +157,32 @@ export default function AIGlobe() {
       }
 
       // Small morphing, spiky 'intelligent aura' shape at random intervals for generative effect
-      for (let k = 0; k < 2; k++) {
-        const cx = canvas.width * (0.27 + 0.32 * k + 0.06 * Math.sin(now * 0.0008 + k));
-        const cy = canvas.height * (0.37 + 0.33 * k + 0.04 * Math.cos(now * 0.001 + 2 * k));
-        const baseR = 76 + 22 * Math.sin(now * 0.0012 + k * 3);
-        ctx.save();
-        ctx.globalAlpha = 0.075;
-        ctx.beginPath();
-        for (let i = 0; i <= 16; i++) {
-          const angle = (i / 16) * 2 * Math.PI;
-          const morph =
-            Math.sin(now * 0.00068 + i * 2 + k * 10) * 18 +
-            Math.cos(now * 0.00032 + i * 2.1 + k * 6.3) * 13;
-          const r = baseR + morph;
-          ctx.lineTo(
-            cx + Math.cos(angle) * r,
-            cy + Math.sin(angle) * r
-          );
+      // Anchors are spread within the section
+      if (canvas.width > 300 && canvas.height > 200) {
+        for (let k = 0; k < 2; k++) {
+          const cx = canvas.width * (0.27 + 0.32 * k + 0.06 * Math.sin(now * 0.0008 + k));
+          const cy = canvas.height * (0.37 + 0.33 * k + 0.04 * Math.cos(now * 0.001 + 2 * k));
+          const baseR = 76 + 22 * Math.sin(now * 0.0012 + k * 3);
+          ctx.save();
+          ctx.globalAlpha = 0.075;
+          ctx.beginPath();
+          for (let i = 0; i <= 16; i++) {
+            const angle = (i / 16) * 2 * Math.PI;
+            const morph =
+              Math.sin(now * 0.00068 + i * 2 + k * 10) * 18 +
+              Math.cos(now * 0.00032 + i * 2.1 + k * 6.3) * 13;
+            const r = baseR + morph;
+            ctx.lineTo(
+              cx + Math.cos(angle) * r,
+              cy + Math.sin(angle) * r
+            );
+          }
+          ctx.closePath();
+          ctx.fillStyle = k === 0 ? "#16ffe9" : "#a08bfa";
+          ctx.filter = "blur(12px)";
+          ctx.fill();
+          ctx.restore();
         }
-        ctx.closePath();
-        ctx.fillStyle = k === 0 ? "#16ffe9" : "#a08bfa";
-        ctx.filter = "blur(12px)";
-        ctx.fill();
-        ctx.restore();
       }
 
       animationFrame.current = requestAnimationFrame(animate);
@@ -188,23 +195,22 @@ export default function AIGlobe() {
     };
   }, []);
 
-  // Canvas covers all of parent (use absolute positioning)
+  // Canvas covers all of parent only (absolutely positioned, not fixed)
   return (
     <div
-      className="pointer-events-none fixed inset-0 z-0 select-none"
+      className="pointer-events-none absolute inset-0 z-0 select-none"
       aria-hidden="true"
       style={{
-        width: "100vw",
-        height: "100vh",
-        minHeight: "100dvh",
+        width: "100%",
+        height: "100%",
         top: 0,
         left: 0
       }}
     >
       <canvas
         ref={canvasRef}
-        style={{ width: "100vw", height: "100vh", display: "block" }}
-        className="w-screen h-screen"
+        style={{ width: "100%", height: "100%", display: "block" }}
+        className="w-full h-full"
       />
     </div>
   );
