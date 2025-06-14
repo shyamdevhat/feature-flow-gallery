@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, MessageSquare, Star, Send } from 'lucide-react';
@@ -68,7 +69,7 @@ const Feedback = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-primary via-secondary to-accent transition-colors duration-500">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-black/20 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center">
@@ -87,7 +88,7 @@ const Feedback = () => {
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Share Your
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
               {" "}Feedback
             </span>
           </h1>
@@ -99,7 +100,7 @@ const Feedback = () => {
         <Card className="bg-white/5 backdrop-blur-sm border-white/10 animate-fade-in">
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center">
                 <MessageSquare className="w-4 h-4 text-white" />
               </div>
               Feedback Form
@@ -189,7 +190,7 @@ const Feedback = () => {
               <Button 
                 type="submit" 
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90 text-white py-3 text-lg font-semibold"
+                className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white py-3 text-lg font-semibold"
               >
                 {isSubmitting ? (
                   <>
