@@ -167,7 +167,8 @@ const apps = [
 const AppDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const app = apps.find(a => a.id === parseInt(id || '0'));
+  // Fix: string comparison for UUID ids, not parseInt!
+  const app = apps.find(a => a.id.toString() === id);
 
   if (!app) {
     return (
