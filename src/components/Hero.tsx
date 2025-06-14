@@ -41,23 +41,21 @@ const Hero = () => {
       <div className="absolute top-40 right-20 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float-delayed"></div>
       <div className="absolute bottom-40 left-40 w-72 h-72 bg-accent rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float-reverse"></div>
       {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
+      <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
         <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8 animate-fade-in">
           <span className="text-sm text-white/80">
-            Software Center of Excellence · GenAI Solutions
+            GenAI Solutions · Explore & Discover
           </span>
         </div>
         <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
           <span className="block mb-2 text-xl md:text-2xl font-semibold text-accent tracking-wide">
-            Architecture &amp; Advanced Technology · GenAI Solutions
+            GenAI Application Showcase
           </span>
-          Building Generative AI-Driven Applications for All Business Units
+          Explore AI-Powered Solutions
         </h1>
         <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto animate-fade-in">
-          <span className="font-bold text-accent">Software COE</span> develops advanced GenAI solutions spanning every business unit. 
-          This <span className="font-semibold text-primary">Architecture &amp; Advanced Technology</span> workstream delivers innovation and 
-          technical excellence, collaborating with <span className="font-semibold text-secondary">DevOps</span>, <span className="font-semibold text-accent">Agile</span>, and <span className="font-semibold text-primary">Test Automation</span> workstreams to unlock value throughout 
-          our organization.
+          Discover innovative <span className="font-bold text-accent">GenAI applications</span> built for modern businesses. 
+          Explore cutting-edge solutions, try demos, and find the perfect AI tools for your needs.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
           <Button 
@@ -65,7 +63,7 @@ const Hero = () => {
             onClick={scrollToShowcase}
             className="bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-2xl"
           >
-            Explore GenAI Applications
+            Explore Applications
           </Button>
           <Button 
             size="lg" 
