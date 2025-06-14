@@ -1,83 +1,42 @@
-import React, { useState } from 'react';
-import { Code, Database, Globe, Smartphone, Zap, Shield } from 'lucide-react';
-import AppCard from './AppCard';
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 
-const apps = [
-  {
-    id: 1,
-    title: "TaskFlow Pro",
-    description: "Advanced project management with AI-powered insights and real-time collaboration.",
-    tech: ["React", "Python", "MongoDB"],
-    features: ["AI Analytics", "Real-time Sync", "Team Collaboration"],
-    icon: Zap,
-    gradient: "from-blue-500 to-cyan-500",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=600&fit=crop"
-  },
-  {
-    id: 2,
-    title: "DataViz Studio",
-    description: "Interactive data visualization platform with machine learning capabilities.",
-    tech: ["React", "Python", "MongoDB"],
-    features: ["ML Integration", "Custom Charts", "Export Tools"],
-    icon: Database,
-    gradient: "from-purple-500 to-pink-500",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=600&fit=crop"
-  },
-  {
-    id: 3,
-    title: "SecureConnect",
-    description: "Next-generation secure communication platform with end-to-end encryption.",
-    tech: ["React", "Python", "MongoDB"],
-    features: ["E2E Encryption", "Video Calls", "File Sharing"],
-    icon: Shield,
-    gradient: "from-green-500 to-teal-500",
-    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&h=600&fit=crop"
-  },
-  {
-    id: 4,
-    title: "CloudDeploy",
-    description: "Automated deployment and scaling solution for modern web applications.",
-    tech: ["React", "Python", "MongoDB"],
-    features: ["Auto Scaling", "CI/CD Pipeline", "Monitoring"],
-    icon: Globe,
-    gradient: "from-orange-500 to-red-500",
-    image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=800&h=600&fit=crop"
-  },
-  {
-    id: 5,
-    title: "MobileFirst",
-    description: "Cross-platform mobile development framework with native performance.",
-    tech: ["React", "Python", "MongoDB"],
-    features: ["Native Performance", "Cross Platform", "Hot Reload"],
-    icon: Smartphone,
-    gradient: "from-indigo-500 to-purple-500",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop"
-  },
-  {
-    id: 6,
-    title: "CodeStudio",
-    description: "Collaborative IDE with AI code completion and real-time pair programming.",
-    tech: ["React", "Python", "MongoDB"],
-    features: ["AI Completion", "Live Collaboration", "Multi-language"],
-    icon: Code,
-    gradient: "from-pink-500 to-rose-500",
-    image: "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=800&h=600&fit=crop"
-  }
-];
+import React, { useState } from "react";
+import { Code, Database, Globe, Smartphone, Zap, Shield } from "lucide-react";
+import AppCard from "./AppCard";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { useApplications } from "@/hooks/useApplications";
+
+const appIcons: Record<string, React.ElementType> = {
+  Zap,
+  Database,
+  Shield,
+  Globe,
+  Smartphone,
+  Code,
+};
 
 const AppShowcase = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const appsPerPage = 6;
-  const totalPages = Math.ceil(apps.length / appsPerPage);
-  
+
+  const { data: apps, isLoading, isError } = useApplications();
+
+  // Pagination calculations
+  const totalPages = apps ? Math.ceil(apps.length / appsPerPage) : 1;
   const startIndex = (currentPage - 1) * appsPerPage;
-  const currentApps = apps.slice(startIndex, startIndex + appsPerPage);
+  const currentApps = apps
+    ? apps.slice(startIndex, startIndex + appsPerPage)
+    : [];
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    // Smooth scroll to top of showcase
-    document.getElementById('app-showcase')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById("app-showcase")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -95,49 +54,84 @@ const AppShowcase = () => {
             and designed for exceptional user experiences.
           </p>
         </div>
-        
+
+        {isLoading && (
+          <div className="text-white text-center py-10">Loading applications...</div>
+        )}
+        {isError && (
+          <div className="text-red-400 text-center py-10">
+            Failed to load applications from the database.
+          </div>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {currentApps.map((app, index) => (
-            <AppCard key={app.id} app={app} index={index} />
-          ))}
+          {currentApps.map((app, index) => {
+            const Icon = appIcons[app.icon] || Code;
+            return (
+              <AppCard
+                key={app.id}
+                app={{
+                  ...app,
+                  icon: Icon,
+                  image: app.image_url,
+                  gradient: app.gradient,
+                  features: app.features,
+                  tech: app.tech,
+                }}
+                index={index}
+              />
+            );
+          })}
         </div>
 
         {/* Pagination */}
-        <div className="flex justify-center">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious 
-                  onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
-                  className={`${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-white/10'} text-white border-white/30`}
-                />
-              </PaginationItem>
-              
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <PaginationItem key={page}>
-                  <PaginationLink
-                    onClick={() => handlePageChange(page)}
-                    isActive={currentPage === page}
-                    className={`cursor-pointer ${
-                      currentPage === page 
-                        ? 'bg-white/20 text-white border-white/50' 
-                        : 'text-white/70 hover:bg-white/10 hover:text-white border-white/30'
-                    }`}
-                  >
-                    {page}
-                  </PaginationLink>
+        {apps && apps.length > appsPerPage && (
+          <div className="flex justify-center">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+                    className={`${
+                      currentPage === 1
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer hover:bg-white/10"
+                    } text-white border-white/30`}
+                  />
                 </PaginationItem>
-              ))}
-              
-              <PaginationItem>
-                <PaginationNext 
-                  onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
-                  className={`${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-white/10'} text-white border-white/30`}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      onClick={() => handlePageChange(page)}
+                      isActive={currentPage === page}
+                      className={`cursor-pointer ${
+                        currentPage === page
+                          ? "bg-white/20 text-white border-white/50"
+                          : "text-white/70 hover:bg-white/10 hover:text-white border-white/30"
+                      }`}
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() =>
+                      currentPage < totalPages && handlePageChange(currentPage + 1)
+                    }
+                    className={`${
+                      currentPage === totalPages
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer hover:bg-white/10"
+                    } text-white border-white/30`}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
       </div>
     </section>
   );
