@@ -155,27 +155,30 @@ const Roadmap = () => {
                 
                 {/* Features */}
                 <div className="ml-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {quarter.features.map((feature, featureIndex) => (
-                    <Card key={featureIndex} className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all duration-300">
-                      <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <CardTitle className="text-white text-lg">{feature.title}</CardTitle>
-                          <div className={`w-3 h-3 rounded-full ${statusConfig[feature.status].color}`}></div>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <CardDescription className="text-white/70">
-                          {feature.description}
-                        </CardDescription>
-                        <div className="mt-4">
-                          <Badge variant="outline" className={`text-xs ${statusConfig[feature.status].color.replace('bg-', 'border-')} text-white border-opacity-50`}>
-                            <statusConfig[feature.status].icon className="w-3 h-3 mr-1" />
-                            {statusConfig[feature.status].label}
-                          </Badge>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                  {quarter.features.map((feature, featureIndex) => {
+                    const Icon = statusConfig[feature.status].icon;
+                    return (
+                      <Card key={featureIndex} className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all duration-300">
+                        <CardHeader>
+                          <div className="flex items-center justify-between">
+                            <CardTitle className="text-white text-lg">{feature.title}</CardTitle>
+                            <div className={`w-3 h-3 rounded-full ${statusConfig[feature.status].color}`}></div>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <CardDescription className="text-white/70">
+                            {feature.description}
+                          </CardDescription>
+                          <div className="mt-4">
+                            <Badge variant="outline" className={`text-xs ${statusConfig[feature.status].color.replace('bg-', 'border-')} text-white border-opacity-50 flex items-center`}>
+                              <Icon className="w-3 h-3 mr-1" />
+                              {statusConfig[feature.status].label}
+                            </Badge>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
                 </div>
               </div>
             ))}
