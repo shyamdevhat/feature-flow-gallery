@@ -3,126 +3,103 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system for GenAI/COE. All colors, gradients, fonts, etc should be defined here. */
+/* Apple-inspired design system */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 @layer base {
   :root {
-    --background: 210 25% 98%;           /* crisp white background */
-    --foreground: 222 84% 4.9%;          /* deep dark text */
+    --background: 0 0% 99%;              /* Apple white */
+    --foreground: 222 27% 10%;           /* Near-black, not harsh */
     --card: 0 0% 100%;
-    --card-foreground: 222 84% 4.9%;
+    --card-foreground: 222 27% 10%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 84% 4.9%;
+    --primary: 223 92% 55%;              /* Soft blue */
+    --primary-foreground: 0 0% 100%;
 
-    --primary: 217 91% 60%;              /* vibrant blue */
-    --primary-foreground: 210 40% 98%;
+    --secondary: 220 14% 96%;            /* Softest neutral grey */
+    --secondary-foreground: 222 27% 10%;
 
-    --secondary: 210 40% 94%;            /* light blue-grey */
-    --secondary-foreground: 222 47% 11%;
+    --muted: 223 25% 92%;
+    --muted-foreground: 223 10% 60%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-
-    --accent: 142 76% 36%;               /* modern teal accent */
-    --accent-foreground: 210 40% 98%;
+    --accent: 168 70% 40%;               /* Gentle teal accent */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 217 91% 60%;
+    --border: 220 14% 90%;
+    --input: 220 14% 90%;
+    --ring: 223 92% 55%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 222 84% 4.9%;
-    --sidebar-primary: 217 91% 60%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 210 40% 96%;
-    --sidebar-accent-foreground: 222 84% 4.9%;
-    --sidebar-border: 214 32% 91%;
-    --sidebar-ring: 217 91% 60%;
+    font-family: 'Inter', sans-serif;
   }
 
   .dark {
-    --background: 222 84% 4.9%;          /* rich dark background */
-    --foreground: 210 40% 98%;           /* crisp white text */
-    --card: 222 84% 7%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 84% 7%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217 91% 60%;              /* vibrant blue */
-    --primary-foreground: 222 84% 4.9%;
-    --secondary: 217 32% 17%;            /* dark blue-grey */
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 142 76% 36%;               /* modern teal accent */
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 32% 17%;
-    --input: 217 32% 17%;
-    --ring: 217 91% 60%;
-    --sidebar-background: 222 84% 4.9%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 217 91% 60%;
-    --sidebar-primary-foreground: 222 84% 4.9%;
-    --sidebar-accent: 217 32% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 32% 17%;
-    --sidebar-ring: 217 91% 60%;
+    --background: 222 27% 10%;
+    --foreground: 0 0% 98%;
+    --card: 223 35% 8%;
+    --card-foreground: 240 25% 98%;
+    --primary: 223 92% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 222 27% 14%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 222 15% 16%;
+    --muted-foreground: 0 0% 58%;
+    --accent: 168 70% 40%;
+    --accent-foreground: 0 0% 100%;
+    --border: 222 27% 16%;
+    --input: 222 27% 16%;
+    --ring: 223 92% 65%;
   }
 }
 
 @layer base {
   * {
     @apply border-border;
+    font-family: 'Inter', sans-serif;
   }
 
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Inter', sans-serif;
   }
 }
 
-/* Modern gradient utilities */
-@layer utilities {
-  .gradient-primary {
-    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
+/* Apple-style glass card */
+@layer components {
+  .apple-card {
+    @apply bg-white/60 dark:bg-black/30 rounded-xl shadow-sm border border-border;
+    backdrop-filter: blur(32px);
+    box-shadow: 0 4px 24px 0 rgba(0,8,32,.025);
+    transition: background 0.3s, box-shadow 0.3s;
   }
-  
-  .gradient-secondary {
-    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #0e7490 100%);
+  .apple-hero-gradient {
+    background: linear-gradient(120deg, #e8ecf5 0%, #f8fafc 40%, #e2f1ff 100%);
   }
-  
-  .gradient-accent {
-    background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+  .apple-btn {
+    @apply rounded-lg font-semibold px-7 py-3 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary;
+    box-shadow: 0 2px 8px 0 rgba(60,132,255,0.04);
   }
-  
-  .gradient-mesh {
-    background: 
-      radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 0.3) 0px, transparent 0%),
-      radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 0.3) 0px, transparent 50%),
-      radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 0.3) 0px, transparent 50%),
-      radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 0.3) 0px, transparent 50%),
-      radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 0.3) 0px, transparent 50%),
-      radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 0.3) 0px, transparent 50%),
-      radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 0.3) 0px, transparent 50%);
+  .apple-btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/80;
   }
-  
-  .glass-effect {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  
-  .text-gradient {
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8, #10b981);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .apple-btn-ghost {
+    @apply border border-border bg-white/50 text-foreground hover:bg-gray-50;
   }
 }
+
+/* Section separation */
+@layer utilities {
+  .apple-section {
+    @apply py-24 md:py-32;
+  }
+  .glass-effect {
+    background: rgba(255,255,255,0.7);
+    @apply border border-border backdrop-blur-lg rounded-2xl;
+  }
+}
+
