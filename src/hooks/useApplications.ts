@@ -40,6 +40,6 @@ export const useApplications = (page: number, limit: number) => {
   return useQuery({
     queryKey: ["applications", page, limit],
     queryFn: () => fetchApplications({ page, limit }),
-    keepPreviousData: true, // keeps old data during fetch to avoid flashing
+    staleTime: 250, // keeps data fresh for 0.25s to smooth UI
   });
 };
