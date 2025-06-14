@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Hero from '../components/Hero';
 import AppShowcase from '../components/AppShowcase';
@@ -8,7 +7,7 @@ import Footer from '../components/Footer';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-[#172238] via-[#274060] to-[#1a2635]">
       <Hero />
       <AppShowcase />
       <FeaturesSection />
