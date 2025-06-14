@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { CheckCircle, Database } from "lucide-react";
@@ -38,8 +37,11 @@ const DetailsGrid: React.FC<DetailsGridProps> = ({ app, gradient }) => (
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col">
-        <p className="text-white/70 mb-4">Explore architecture diagrams, images, and documents as uploaded by the admin.</p>
-        <AppGallery applicationId={app.id} gradient={gradient} />
+        <p className="text-white/70 mb-4">
+          Explore architecture diagrams, images, and documents as uploaded by the admin.
+        </p>
+        {/* Only gallery, no upload option */}
+        <AppGallery applicationId={app.id} gradient={gradient} hideUpload />
       </CardContent>
     </Card>
   </div>
