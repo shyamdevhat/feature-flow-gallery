@@ -103,7 +103,7 @@ const Roadmap = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-primary via-secondary to-accent transition-colors duration-500">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-black/20 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center">
@@ -122,7 +122,7 @@ const Roadmap = () => {
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
             Product
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
               {" "}Roadmap
             </span>
           </h1>
@@ -135,7 +135,7 @@ const Roadmap = () => {
         {/* Timeline */}
         <div className="relative">
           {/* Vertical line */}
-          <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500 to-purple-500"></div>
+          <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-primary to-accent"></div>
           
           <div className="space-y-12">
             {roadmapData.map((quarter, quarterIndex) => (
@@ -195,7 +195,7 @@ const Roadmap = () => {
               </p>
               <Button 
                 onClick={() => navigate('/feedback')}
-                className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90 text-white"
+                className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white"
               >
                 Share Your Feedback
               </Button>

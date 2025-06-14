@@ -13,22 +13,57 @@ export interface AppRoadmapItem {
   updated_at: string | null;
 }
 
-// Fetch all roadmap items for a given application_id, sorted by sort_order
-const fetchAppRoadmap = async (application_id: string): Promise<AppRoadmapItem[]> => {
-  const { data, error } = await supabase
+interface FetchAppRoadmapParams {
+  application_id: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+}
+
+// Fetch roadmap items with pagination and filtering
+const fetchAppRoadmap = async ({ 
+  application_id, 
+  status, 
+  page = 1, 
+  limit = 10 
+}: FetchAppRoadmapParams): Promise<{ items: AppRoadmapItem[]; totalCount: number }> => {
+  let query = supabase
     .from("app_roadmap_items")
-    .select("*")
+    .select("*", { count: "exact" })
     .eq("application_id", application_id)
     .order("sort_order", { ascending: true });
 
+  if (status && status !== "all") {
+    query = query.eq("status", status);
+  }
+
+  const from = (page - 1) * limit;
+  const to = from + limit - 1;
+
+  const { data, error, count } = await query.range(from, to);
+
   if (error) throw error;
-  return data as AppRoadmapItem[];
+  
+  return {
+    items: data as AppRoadmapItem[],
+    totalCount: count || 0
+  };
 };
 
-export const useAppRoadmap = (application_id?: string) => {
+export const useAppRoadmap = (
+  application_id?: string, 
+  status?: string, 
+  page: number = 1, 
+  limit: number = 10
+) => {
   return useQuery({
-    queryKey: ["app_roadmap", application_id],
-    queryFn: () => fetchAppRoadmap(application_id!),
+    queryKey: ["app_roadmap", application_id, status, page, limit],
+    queryFn: () => fetchAppRoadmap({ 
+      application_id: application_id!, 
+      status, 
+      page, 
+      limit 
+    }),
     enabled: !!application_id,
   });
 };
