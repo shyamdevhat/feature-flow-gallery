@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,6 +10,7 @@ import RequestAccess from "./pages/RequestAccess";
 import Roadmap from "./pages/Roadmap";
 import Feedback from "./pages/Feedback";
 import NotFound from "./pages/NotFound";
+import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +22,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/app/:id" element={<AppDetails />} />
           <Route path="/app/:id/demo" element={<AppDemo />} />
           <Route path="/request-access" element={<RequestAccess />} />
