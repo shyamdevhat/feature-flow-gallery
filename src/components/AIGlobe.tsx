@@ -1,16 +1,13 @@
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
-// Animated particle field for "AI intelligence" background
-const WIDTH = 420;
-const HEIGHT = 420;
-const PARTICLE_COUNT = 26;
-const PALETTE = [
+// Full viewport animated particles background, covering all areas organically
+const PARTICLE_COUNT = 34;
+const PARTICLE_COLORS = [
   "#93f6f1", "#adadfd", "#e2e0fb", "#84f1e9",
   "#17e3bf", "#a08bfa", "#82f0c2", "#8ee7e1"
 ];
 
-// Utility for animation frame
 function random(min: number, max: number) {
   return Math.random() * (max - min) + min;
 }
@@ -18,135 +15,197 @@ function random(min: number, max: number) {
 type Particle = {
   x: number;
   y: number;
+  baseX: number;
+  baseY: number;
+  vx: number;
+  vy: number;
   r: number;
   baseR: number;
   color: string;
   t: number;
-  speed: number;
-  orbitR: number;
-  orbitAngle: number;
   alpha: number;
 };
 
-function createParticles(): Particle[] {
+function createParticles(canvasWidth: number, canvasHeight: number): Particle[] {
   const arr: Particle[] = [];
   for (let i = 0; i < PARTICLE_COUNT; i++) {
-    const color = PALETTE[i % PALETTE.length];
-    const baseR = random(8, 19);
-    const t = random(0, Math.PI * 2);
-    const orbitR = random(54, 170);
-    const orbitAngle = random(0, Math.PI * 2);
+    // Distribute particles throughout the available space
+    const baseR = random(9, 22);
+    const x = random(0, canvasWidth);
+    const y = random(0, canvasHeight);
     arr.push({
-      x: WIDTH / 2,
-      y: HEIGHT / 2,
+      x,
+      y,
+      baseX: x,
+      baseY: y,
+      vx: random(-0.24, 0.24),
+      vy: random(-0.24, 0.24),
       r: baseR,
       baseR,
-      color,
-      t,
-      speed: random(0.006, 0.022),
-      orbitR,
-      orbitAngle,
-      alpha: random(0.48, 0.94),
+      color: PARTICLE_COLORS[i % PARTICLE_COLORS.length],
+      t: random(0, Math.PI * 2),
+      alpha: random(0.44, 0.88),
     });
   }
   return arr;
 }
 
 export default function AIGlobe() {
-  const svgRef = useRef<SVGSVGElement>(null);
-  const particles = useRef<Particle[]>(createParticles());
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const particles = useRef<Particle[] | null>(null);
+  const animationFrame = useRef<number | null>(null);
 
-  // Animate particles in morphing orbits and scales
+  // Resize canvas and particles on window resize
   useEffect(() => {
-    let frame: number;
-    const animate = () => {
-      const now = Date.now();
-      const svg = svgRef.current;
-      if (svg) {
-        particles.current.forEach((p, i) => {
-          // Orbit update
-          p.orbitAngle += p.speed * (1.05 + Math.sin(now * 0.00038 + i) * 0.23);
-          const m = 0.85 + Math.sin(now * 0.00038 + i * 0.6) * 0.17;
-          p.x = WIDTH / 2 + Math.cos(p.orbitAngle) * p.orbitR * m;
-          p.y = HEIGHT / 2 + Math.sin(p.orbitAngle) * p.orbitR * m;
-
-          // Morph radius
-          p.r = p.baseR * (0.85 + Math.cos(now * 0.001 + i * 0.9) * 0.21);
-
-          // Morph alpha
-          p.alpha = 0.6 + Math.sin(now * 0.0009 + i * 0.8) * 0.19;
-
-          // Apply to SVG element
-          const el = svg.getElementById(`ai-particle-${i}`);
-          if (el) {
-            el.setAttribute("cx", p.x.toString());
-            el.setAttribute("cy", p.y.toString());
-            el.setAttribute("r", p.r.toString());
-            el.setAttribute("fill-opacity", p.alpha.toString());
-          }
-        });
-      }
-      frame = requestAnimationFrame(animate);
-    };
-    animate();
-    return () => cancelAnimationFrame(frame);
+    function resizeCanvas() {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = "100vw";
+      canvas.style.height = "100vh";
+      // Re-create particles to fill current window
+      particles.current = createParticles(canvas.width, canvas.height);
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+    return () => window.removeEventListener("resize", resizeCanvas);
   }, []);
 
-  // Extra: central glowing "intelligent core" (looks like a bright data source)
+  // Animate particles in morphing orbits and random walks
+  useEffect(() => {
+    let lastWidth = window.innerWidth;
+    let lastHeight = window.innerHeight;
+
+    function animate() {
+      const canvas = canvasRef.current;
+      const ctx = canvas?.getContext("2d");
+      if (!canvas || !ctx) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      // Handle resize
+      if (canvas.width !== window.innerWidth * dpr || canvas.height !== window.innerHeight * dpr) {
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        particles.current = createParticles(canvas.width, canvas.height);
+        lastWidth = window.innerWidth;
+        lastHeight = window.innerHeight;
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (!particles.current) particles.current = createParticles(canvas.width, canvas.height);
+
+      const now = Date.now();
+      // Animate all particles
+      for (let i = 0; i < particles.current.length; i++) {
+        const p = particles.current[i];
+
+        // Morph position (mild circular wobble + floating drift)
+        p.t += 0.010 + 0.003 * Math.sin(now * 0.00023 + i * 0.38);
+        p.x += p.vx + Math.cos(p.t + i) * 0.13;
+        p.y += p.vy + Math.sin(p.t + i) * 0.19;
+
+        // Bounce off edges (invisible walls)
+        if (p.x < p.r * 0.7) {
+          p.x = p.r * 0.7;
+          p.vx = Math.abs(p.vx);
+        }
+        if (p.y < p.r * 0.7) {
+          p.y = p.r * 0.7;
+          p.vy = Math.abs(p.vy);
+        }
+        if (p.x > canvas.width - p.r * 0.7) {
+          p.x = canvas.width - p.r * 0.7;
+          p.vx = -Math.abs(p.vx);
+        }
+        if (p.y > canvas.height - p.r * 0.7) {
+          p.y = canvas.height - p.r * 0.7;
+          p.vy = -Math.abs(p.vy);
+        }
+
+        // Morph radius & alpha
+        p.r = p.baseR * (0.82 + 0.19 * Math.sin(now * 0.0007 + i * 0.9));
+        p.alpha = 0.6 + 0.24 * Math.sin(now * 0.0016 + i * 0.8);
+
+        // Draw shadow glow
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha * 0.4);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r + 12, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.filter = `blur(16px)`;
+        ctx.fill();
+        ctx.restore();
+
+        // Draw main particle
+        ctx.save();
+        ctx.globalAlpha = Math.max(0.07, p.alpha);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 16;
+        ctx.globalCompositeOperation = "lighter";
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Small morphing, spiky 'intelligent aura' shape at random intervals for generative effect
+      for (let k = 0; k < 2; k++) {
+        const cx = canvas.width * (0.27 + 0.32 * k + 0.06 * Math.sin(now * 0.0008 + k));
+        const cy = canvas.height * (0.37 + 0.33 * k + 0.04 * Math.cos(now * 0.001 + 2 * k));
+        const baseR = 76 + 22 * Math.sin(now * 0.0012 + k * 3);
+        ctx.save();
+        ctx.globalAlpha = 0.075;
+        ctx.beginPath();
+        for (let i = 0; i <= 16; i++) {
+          const angle = (i / 16) * 2 * Math.PI;
+          const morph =
+            Math.sin(now * 0.00068 + i * 2 + k * 10) * 18 +
+            Math.cos(now * 0.00032 + i * 2.1 + k * 6.3) * 13;
+          const r = baseR + morph;
+          ctx.lineTo(
+            cx + Math.cos(angle) * r,
+            cy + Math.sin(angle) * r
+          );
+        }
+        ctx.closePath();
+        ctx.fillStyle = k === 0 ? "#16ffe9" : "#a08bfa";
+        ctx.filter = "blur(12px)";
+        ctx.fill();
+        ctx.restore();
+      }
+
+      animationFrame.current = requestAnimationFrame(animate);
+    }
+
+    animationFrame.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrame.current) cancelAnimationFrame(animationFrame.current);
+    };
+  }, []);
+
+  // Canvas covers all of parent (use absolute positioning)
   return (
-    <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none select-none">
-      <svg
-        ref={svgRef}
-        width={WIDTH}
-        height={HEIGHT}
-        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-        style={{
-          maxWidth: "96vw",
-          maxHeight: "60vw",
-          filter: "drop-shadow(0 0 35px #15ffe6b7)",
-        }}
-        className="block"
-      >
-        {/* Central glowing orb: GenAI "core" */}
-        <radialGradient id="aicore" cx="50%" cy="50%" r="58%">
-          <stop offset="0%" stopColor="#17e3bf" stopOpacity="1" />
-          <stop offset="41%" stopColor="#a08bfa" stopOpacity="0.48" />
-          <stop offset="100%" stopColor="#060616" stopOpacity="0.23" />
-        </radialGradient>
-        <circle
-          cx={WIDTH / 2}
-          cy={HEIGHT / 2}
-          r={65}
-          fill="url(#aicore)"
-          opacity={0.82}
-        />
-        {/* Animated swirling morphing particles */}
-        {particles.current.map((p, i) => (
-          <circle
-            id={`ai-particle-${i}`}
-            key={i}
-            cx={p.x}
-            cy={p.y}
-            r={p.r}
-            fill={p.color}
-            fillOpacity={p.alpha}
-            style={{
-              mixBlendMode: "screen",
-              filter: `blur(${2 + (i % 3)}px) drop-shadow(0 0 26px ${p.color})`
-            }}
-          />
-        ))}
-        {/* Extra shimmer highlight above core */}
-        <ellipse
-          cx={WIDTH / 2}
-          cy={HEIGHT / 2 - 27}
-          rx={37}
-          ry={8}
-          fill="#fff"
-          filter="blur(6px)"
-          opacity={0.17}
-        />
-      </svg>
+    <div
+      className="pointer-events-none fixed inset-0 z-0 select-none"
+      aria-hidden="true"
+      style={{
+        width: "100vw",
+        height: "100vh",
+        minHeight: "100dvh",
+        top: 0,
+        left: 0
+      }}
+    >
+      <canvas
+        ref={canvasRef}
+        style={{ width: "100vw", height: "100vh", display: "block" }}
+        className="w-screen h-screen"
+      />
     </div>
   );
 }
