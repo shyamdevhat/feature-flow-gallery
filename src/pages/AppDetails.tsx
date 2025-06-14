@@ -93,9 +93,7 @@ const AppDetails = () => {
       <div className="max-w-7xl mx-auto px-4 py-12">
         <HeroSection app={app} />
         <MainImage src={app.image_url!} alt={app.title} />
-        {/* Gallery for attachments/architecture */}
-        <AppGallery applicationId={app.id} gradient={app.gradient} />
-        <DetailsGrid gradient={app.gradient} />
+        <DetailsGrid app={app} gradient={app.gradient} />
         {/* Roadmap Section */}
         <AppRoadmap applicationId={app.id} gradient={app.gradient} />
         <Benefits features={app.features} gradient={app.gradient} />
